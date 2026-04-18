@@ -1,40 +1,48 @@
-from abc import ABC, abstractmethod
+class PalindromDetector:
+    def __init__(self, text):
+        self.text = text
+        self.words = text.split()
+        self.palindroms = []
 
-class Algorithm(ABC):
-    @abstractmethod
-    def calculate(self, data):
-        pass
+    def find_palindroms(self):
+        for word in self.words:
+            if self.is_palindrom(word):
+                self.palindroms.append(word)
 
-class BubbleSort(Algorithm):
-    def calculate(self, data):
-        for i in range(len(data)):
-            for j in range(len(data) - 1):
-                if data[j] > data[j + 1]:
-                    data[j], data[j + 1] = data[j + 1], data[j]
-        return data
+    def is_palindrom(self, word):
+        word = word.lower()
+        return word == word[::-1]
 
-class QuickSort(Algorithm):
-    def calculate(self, data):
-        if len(data) <= 1:
-            return data
-        pivot = data[len(data) // 2]
-        left = [x for x in data if x < pivot]
-        middle = [x for x in data if x == pivot]
-        right = [x for x in data if x > pivot]
-        return self.calculate(left) + middle + self.calculate(right)
+    def print_palindroms(self):
+        print("Palindrom so'zlar:")
+        for palindrom in self.palindroms:
+            print(palindrom)
 
-class Strategy:
-    def __init__(self, algorithm):
-        self.algorithm = algorithm
+def main():
+    text = "Madam, Arora, refer, level, radar, madam"
+    detector = PalindromDetector(text)
+    detector.find_palindroms()
+    detector.print_palindroms()
 
-    def execute(self, data):
-        return self.algorithm.calculate(data)
+    text = "Kamil, anna, bob, dad, mom, radar"
+    detector = PalindromDetector(text)
+    detector.find_palindroms()
+    detector.print_palindroms()
+
+    text = "Aibek, Javokhir, Bekzod, level, refer"
+    detector = PalindromDetector(text)
+    detector.find_palindroms()
+    detector.print_palindroms()
+
+    text = "Ona, ota, inson, it, level, madam"
+    detector = PalindromDetector(text)
+    detector.find_palindroms()
+    detector.print_palindroms()
+
+    text = "Refer, level, madam, anna, bob, dad"
+    detector = PalindromDetector(text)
+    detector.find_palindroms()
+    detector.print_palindroms()
 
 if __name__ == "__main__":
-    data = [5, 2, 8, 1, 9]
-    bubble_sort = BubbleSort()
-    quick_sort = QuickSort()
-    bubble_sort_strategy = Strategy(bubble_sort)
-    quick_sort_strategy = Strategy(quick_sort)
-    print(bubble_sort_strategy.execute(data))
-    print(quick_sort_strategy.execute(data))
+    main()
